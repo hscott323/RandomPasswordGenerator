@@ -1,9 +1,6 @@
 #include "main.hpp"
-#define PEL PasswordEncryptionLevel
-#define PELS PasswordEncryptionLevelString
 
 int main() {
-
 	while (true) {
 		std::cout << "How many characters do you want your password to be?: ";
 
@@ -47,4 +44,14 @@ int main() {
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
+
+	std::random_device RandomDevice;
+	std::mt19937 Generator(RandomDevice());
+	std::uniform_int_distribution<size_t> Distribution(0, PAC.at(PEL).length() - 1);
+
+	for (int i = 0; i < PasswordLength; i++) {
+		Password += PAC.at(PEL)[Distribution(Generator)];
+	}
+
+	std::cout << "Mersenne Twister 19937 Generated Password: " << Password << '\n';
 }
